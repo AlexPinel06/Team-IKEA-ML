@@ -1,0 +1,8 @@
+streamlit
+pandas
+numpy
+torch
+transformers
+optuna
+nltk
+scikit-learn
