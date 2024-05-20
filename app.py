@@ -31,7 +31,7 @@ if not os.path.exists(classes_path):
 # Chargement du tokenizer et du modèle
 try:
     tokenizer_camembert = CamembertTokenizer.from_pretrained('camembert-base')
-    model = CamembertForSequenceClassification.from_pretrained('camembert-base', num_labels=6)  # Ajustez le nombre de labels à 6
+    model = CamembertForSequenceClassification.from_pretrained('camembert-base', num_labels=3)  # Ajustez le nombre de labels à 3
     
     # Vérifier si le fichier du modèle est valide
     model_state_dict = torch.load(model_path, map_location=torch.device('cpu'))
