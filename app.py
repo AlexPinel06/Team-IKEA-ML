@@ -5,6 +5,7 @@ import torch
 from transformers import CamembertTokenizer, CamembertForSequenceClassification
 from sklearn.preprocessing import LabelEncoder
 import re
+import os
 
 # Fonction pour encoder les textes
 def encode_text(data, tokenizer):
@@ -18,15 +19,32 @@ def encode_text(data, tokenizer):
 model_path = 'model/trained_model.pt'
 classes_path = 'model/classes.npy'
 
+# Vérification de l'existence des fichiers nécessaires
+if not os.path.exists(model_path):
+    st.error(f"Le fichier de modèle {model_path} n'existe pas.")
+    st.stop()
+
+if not os.path.exists(classes_path):
+    st.error(f"Le fichier des classes {classes_path} n'existe pas.")
+    st.stop()
+
 # Chargement du tokenizer et du modèle
-tokenizer_camembert = CamembertTokenizer.from_pretrained('camembert-base')
-model = CamembertForSequenceClassification.from_pretrained('camembert-base', num_labels=3)  # Ajustez le nombre de labels si nécessaire
-model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
-model.eval()
+try:
+    tokenizer_camembert = CamembertTokenizer.from_pretrained('camembert-base')
+    model = CamembertForSequenceClassification.from_pretrained('camembert-base', num_labels=3)  # Ajustez le nombre de labels si nécessaire
+    model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
+    model.eval()
+except ImportError as e:
+    st.error(f"Erreur d'importation : {e}")
+    st.stop()
 
 # Chargement de l'encodeur de labels
-label_encoder = LabelEncoder()
-label_encoder.classes_ = np.load(classes_path, allow_pickle=True)
+try:
+    label_encoder = LabelEncoder()
+    label_encoder.classes_ = np.load(classes_path, allow_pickle=True)
+except Exception as e:
+    st.error(f"Erreur lors du chargement des classes : {e}")
+    st.stop()
 
 # Titre de l'application
 st.title('Prédiction du Niveau de Difficulté des Phrases en Français')
