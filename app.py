@@ -9,7 +9,7 @@ from transformers import CamembertForSequenceClassification, CamembertTokenizer
 MODEL_PATH = 'model/trained_model.pt'
 CLASSES_PATH = 'model/classes.npy'
 
-@st.cache(allow_output_mutation=True)
+@st.cache_resource
 def load_model():
     st.write(f"Chargement du modèle depuis {MODEL_PATH}")
     if not os.path.exists(MODEL_PATH):
@@ -23,7 +23,7 @@ def load_model():
     model.eval()
     return model
 
-@st.cache
+@st.cache_data
 def load_classes():
     st.write(f"Chargement des classes depuis {CLASSES_PATH}")
     if not os.path.exists(CLASSES_PATH):
