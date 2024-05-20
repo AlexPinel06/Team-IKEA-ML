@@ -2,7 +2,6 @@ streamlit
 pandas
 numpy
 torch
-transformers==4.11.3
+transformers==4.5.1
 scikit-learn
 sentencepiece
-tokenizers==0.10.3
