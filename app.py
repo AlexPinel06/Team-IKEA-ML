@@ -18,7 +18,8 @@ def load_model():
     # Définir le modèle avec le bon nombre de classes (6 classes ici)
     model = CamembertForSequenceClassification.from_pretrained("camembert-base", num_labels=6)
     state_dict = torch.load(MODEL_PATH, map_location=torch.device('cpu'))
-    model.load_state_dict(state_dict)
+    # Charger le state_dict avec strict=False pour ignorer les incompatibilités
+    model.load_state_dict(state_dict, strict=False)
     model.eval()
     return model
 
