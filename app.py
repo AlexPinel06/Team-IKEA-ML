@@ -13,8 +13,8 @@ def download_file_from_google_drive(file_id, dest):
     gdown.download(f'https://drive.google.com/uc?export=download&id={file_id}', dest, quiet=False)
 
 # IDs des fichiers sur Google Drive
-model_file_id = 'YOUR_MODEL_FILE_ID'
-classes_file_id = 'YOUR_CLASSES_FILE_ID'
+model_file_id = 'https://drive.google.com/file/d/1vQkZ_OXSpjNyE1J9Hy8wX5xj0x4fpAx0/view?usp=share_link'
+classes_file_id = 'https://drive.google.com/file/d/11Hx_s74IMEc1DdQ6YaESI9JJdqhY81No/view?usp=share_link'
 
 # Chemins vers les fichiers de modèle et les classes
 model_path = 'model/trained_model.pt'
