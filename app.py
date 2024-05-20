@@ -32,10 +32,13 @@ if not os.path.exists(classes_path):
 try:
     tokenizer_camembert = CamembertTokenizer.from_pretrained('camembert-base')
     model = CamembertForSequenceClassification.from_pretrained('camembert-base', num_labels=3)  # Ajustez le nombre de labels si nécessaire
-    model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
+    
+    # Vérifier si le fichier du modèle est valide
+    model_state_dict = torch.load(model_path, map_location=torch.device('cpu'))
+    model.load_state_dict(model_state_dict)
     model.eval()
-except ImportError as e:
-    st.error(f"Erreur d'importation : {e}")
+except Exception as e:
+    st.error(f"Erreur lors du chargement du modèle : {e}")
     st.stop()
 
 # Chargement de l'encodeur de labels
@@ -62,13 +65,12 @@ if st.button('Prédire la Difficulté'):
         encodings = encode_text(df, tokenizer_camembert)
 
         # Faire la prédiction
-        with torch.no_grad():
-            outputs = model(**encodings)
-        logits = outputs.logits
-        predicted_class_idx = torch.argmax(logits, dim=1).item()
-        predicted_label = label_encoder.inverse_transform([predicted_class_idx])[0]
+        try:
+            with torch.no_grad():
+                outputs = model(**encodings)
+            logits = outputs.logits
+            predicted_class_idx = torch.argmax(logits, dim=1).item()
+            predicted_label = label_encoder.inverse_transform([predicted_class_idx])[0]
 
-        # Afficher le résultat
-        st.write(f'Le niveau de difficulté de la phrase est: {predicted_label}')
-    else:
-        st.write('Veuillez entrer une phrase.')
+            # Afficher le résultat
+            st.wri
