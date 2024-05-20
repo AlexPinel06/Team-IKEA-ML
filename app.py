@@ -73,4 +73,8 @@ if st.button('Prédire la Difficulté'):
             predicted_label = label_encoder.inverse_transform([predicted_class_idx])[0]
 
             # Afficher le résultat
-            st.wri
+            st.write(f'Le niveau de difficulté de la phrase est: {predicted_label}')
+        except Exception as e:
+            st.error(f"Erreur lors de la prédiction : {e}")
+    else:
+        st.write('Veuillez entrer une phrase.')
