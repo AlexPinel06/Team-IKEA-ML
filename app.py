@@ -15,7 +15,8 @@ def load_model():
     if not os.path.exists(MODEL_PATH):
         st.error(f"Le fichier modèle n'existe pas à l'emplacement {MODEL_PATH}")
         return None
-    model = CamembertForSequenceClassification.from_pretrained("camembert-base", num_labels=10)
+    # Définir le modèle avec le bon nombre de classes (6 classes ici)
+    model = CamembertForSequenceClassification.from_pretrained("camembert-base", num_labels=6)
     state_dict = torch.load(MODEL_PATH, map_location=torch.device('cpu'))
     model.load_state_dict(state_dict)
     model.eval()
