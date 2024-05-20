@@ -1,91 +1,52 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
 import torch
-from transformers import CamembertTokenizer, CamembertForSequenceClassification
-from sklearn.preprocessing import LabelEncoder
-import re
-import os
-import gdown
+import numpy as np
+import torch.nn.functional as F
 
-# Fonction pour télécharger le modèle depuis Google Drive
-def download_file_from_google_drive(file_id, dest):
-    gdown.download(f'https://drive.google.com/uc?export=download&id={file_id}', dest, quiet=False)
+# Chemins vers les fichiers dans le dépôt GitHub
+MODEL_PATH = 'model/trained_model.pt'
+CLASSES_PATH = 'model/classes.npy'
 
-# IDs des fichiers sur Google Drive
-model_file_id = 'https://drive.google.com/file/d/1vQkZ_OXSpjNyE1J9Hy8wX5xj0x4fpAx0/view?usp=share_link'
-classes_file_id = 'https://drive.google.com/file/d/11Hx_s74IMEc1DdQ6YaESI9JJdqhY81No/view?usp=share_link'
-
-# Chemins vers les fichiers de modèle et les classes
-model_path = 'model/trained_model.pt'
-classes_path = 'model/classes.npy'
-
-# Créer le répertoire du modèle s'il n'existe pas
-if not os.path.exists('model'):
-    os.makedirs('model')
-
-# Télécharger les fichiers si nécessaire
-if not os.path.exists(model_path):
-    download_file_from_google_drive(model_file_id, model_path)
-
-if not os.path.exists(classes_path):
-    download_file_from_google_drive(classes_file_id, classes_path)
-
-# Fonction pour encoder les textes
-def encode_text(data, tokenizer):
-    sentences = data['sentence'].tolist()
-    encodings = tokenizer(sentences, padding='max_length', truncation=True, max_length=128, return_tensors='pt')
-    encodings['text_length'] = torch.tensor(data['text_length'].tolist())
-    encodings['punctuation_count'] = torch.tensor(data['punctuation_count'].tolist())
-    return encodings
-
-# Chargement du tokenizer et du modèle
-try:
-    tokenizer_camembert = CamembertTokenizer.from_pretrained('camembert-base')
-    model = CamembertForSequenceClassification.from_pretrained('camembert-base', num_labels=3)
-    
-    # Vérifier si le fichier du modèle est valide
-    model_state_dict = torch.load(model_path, map_location=torch.device('cpu'))
-    model.load_state_dict(model_state_dict)
+@st.cache(allow_output_mutation=True)
+def load_model():
+    # Charger le modèle depuis le fichier local
+    model = torch.load(MODEL_PATH, map_location=torch.device('cpu'))
     model.eval()
-except Exception as e:
-    st.error(f"Erreur lors du chargement du modèle : {e}")
-    st.stop()
+    return model
 
-# Chargement de l'encodeur de labels
-try:
-    label_encoder = LabelEncoder()
-    label_encoder.classes_ = np.load(classes_path, allow_pickle=True)
-except Exception as e:
-    st.error(f"Erreur lors du chargement des classes : {e}")
-    st.stop()
+@st.cache
+def load_classes():
+    # Charger les classes depuis le fichier local
+    classes = np.load(CLASSES_PATH, allow_pickle=True)
+    return classes
 
-# Titre de l'application
-st.title('Prédiction du Niveau de Difficulté des Phrases en Français')
+def predict_difficulty(model, text):
+    # Transformation du texte en entrée du modèle
+    # Cette partie doit être adaptée à votre modèle
+    # Exemple : encoder le texte avec une méthode simple (à adapter selon votre modèle)
+    # Note : Cela suppose que votre modèle accepte des chaînes de caractères directement, ce qui est rare.
+    # Vous devrez probablement effectuer un prétraitement spécifique à votre modèle ici.
+    
+    # Ici, on suppose que le modèle accepte une liste de mots sous forme de tenseur
+    inputs = torch.tensor([len(text.split())], dtype=torch.float).unsqueeze(0)  # Exemple simple basé sur la longueur du texte
+    with torch.no_grad():
+        outputs = model(inputs)
+    probabilities = F.softmax(outputs, dim=1)
+    _, predicted = torch.max(probabilities, 1)
+    return predicted.item()
 
-# Champ de texte pour entrer une phrase
-sentence = st.text_input('Entrez une phrase en français:')
+def main():
+    st.title("Prédiction de la difficulté d'une phrase")
 
-# Bouton pour prédire la difficulté
-if st.button('Prédire la Difficulté'):
-    if sentence:
-        # Préparer les données
-        df = pd.DataFrame({'sentence': [sentence]})
-        df['text_length'] = df['sentence'].apply(len)
-        df['punctuation_count'] = df['sentence'].apply(lambda x: len(re.findall(r'[^\w\s]', x)))
-        encodings = encode_text(df, tokenizer_camembert)
+    model = load_model()
+    classes = load_classes()
 
-        # Faire la prédiction
-        try:
-            with torch.no_grad():
-                outputs = model(**encodings)
-            logits = outputs.logits
-            predicted_class_idx = torch.argmax(logits, dim=1).item()
-            predicted_label = label_encoder.inverse_transform([predicted_class_idx])[0]
+    text = st.text_input("Entrez une phrase :")
 
-            # Afficher le résultat
-            st.write(f'Le niveau de difficulté de la phrase est: {predicted_label}')
-        except Exception as e:
-            st.error(f"Erreur lors de la prédiction : {e}")
-    else:
-        st.write('Veuillez entrer une phrase.')
+    if text:
+        difficulty_index = predict_difficulty(model, text)
+        difficulty = classes[difficulty_index]
+        st.write(f"La difficulté de la phrase est : {difficulty}")
+
+if __name__ == "__main__":
+    main()
