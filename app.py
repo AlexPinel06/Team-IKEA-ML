@@ -14,8 +14,11 @@ def encode_text(data, tokenizer):
     encodings['punctuation_count'] = torch.tensor(data['punctuation_count'].tolist())
     return encodings
 
-# Chargement du modèle et du tokenizer
+# Chemins vers les fichiers de modèle et les classes
 model_path = 'model/trained_model.pt'
+classes_path = 'model/classes.npy'
+
+# Chargement du tokenizer et du modèle
 tokenizer_camembert = CamembertTokenizer.from_pretrained('camembert-base')
 model = CamembertForSequenceClassification.from_pretrained('camembert-base', num_labels=3)  # Ajustez le nombre de labels si nécessaire
 model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
@@ -23,7 +26,7 @@ model.eval()
 
 # Chargement de l'encodeur de labels
 label_encoder = LabelEncoder()
-label_encoder.classes_ = np.load('model/classes.npy', allow_pickle=True)
+label_encoder.classes_ = np.load(classes_path, allow_pickle=True)
 
 # Titre de l'application
 st.title('Prédiction du Niveau de Difficulté des Phrases en Français')
