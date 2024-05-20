@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import torch
-from transformers import CamembertTokenizer, CamembertForSequenceClassification
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from sklearn.preprocessing import LabelEncoder
 import re
 import os
@@ -30,8 +30,8 @@ if not os.path.exists(classes_path):
 
 # Chargement du tokenizer et du modèle
 try:
-    tokenizer_camembert = CamembertTokenizer.from_pretrained('camembert-base')
-    model = CamembertForSequenceClassification.from_pretrained('camembert-base', num_labels=3)  # Ajustez le nombre de labels à 3
+    tokenizer = AutoTokenizer.from_pretrained('distilbert-base-uncased')
+    model = AutoModelForSequenceClassification.from_pretrained('distilbert-base-uncased', num_labels=3)
     
     # Vérifier si le fichier du modèle est valide
     model_state_dict = torch.load(model_path, map_location=torch.device('cpu'))
@@ -62,7 +62,7 @@ if st.button('Prédire la Difficulté'):
         df = pd.DataFrame({'sentence': [sentence]})
         df['text_length'] = df['sentence'].apply(len)
         df['punctuation_count'] = df['sentence'].apply(lambda x: len(re.findall(r'[^\w\s]', x)))
-        encodings = encode_text(df, tokenizer_camembert)
+        encodings = encode_text(df, tokenizer)
 
         # Faire la prédiction
         try:
