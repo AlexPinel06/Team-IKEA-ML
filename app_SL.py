@@ -2,9 +2,9 @@ import streamlit as st
 import joblib
 
 # Charger le modèle, le vectoriseur et l'encodeur de labels
-model = joblib.load('logistic_regression_model.pkl')
-vectorizer = joblib.load('tfidf_vectorizer.pkl')
-label_encoder = joblib.load('label_encoder.pkl')
+model = joblib.load('model2/logistic_regression_model.pkl')
+vectorizer = joblib.load('model2/tfidf_vectorizer.pkl')
+label_encoder = joblib.load('model2/label_encoder.pkl')
 
 st.title("Prédiction de la difficulté des phrases")
 
