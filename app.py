@@ -5,9 +5,9 @@ import numpy as np
 import random
 
 # Load the model, vectorizer, and label encoder
-model = joblib.load('model2/logistic_regression_model.pkl')
-vectorizer = joblib.load('model2/tfidf_vectorizer.pkl')
-label_encoder = joblib.load('model2/label_encoder.pkl')
+model = joblib.load('model/logistic_regression_model.pkl')
+vectorizer = joblib.load('model/tfidf_vectorizer.pkl')
+label_encoder = joblib.load('model/label_encoder.pkl')
 
 # Function to reset the input
 def reset_input():
