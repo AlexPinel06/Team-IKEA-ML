@@ -4,7 +4,7 @@
 
 ## Introduction 
 
-In the burgeoning field of language learning technology, accurately gauging text complexity can significantly enhance learning outcomes. This GitHub repository, EPFL_IKEA, is the culmination of efforts by Alex and me to create an AI model that predicts the difficulty levels of French texts. Our journey, rooted in our own experiences as native French speakers and learners of English, has led us from competing in Kaggle to developing a robust tool that aids learners by matching them with appropriately challenging texts.
+In the burgeoning field of language learning technology, accurately gauging text complexity can significantly enhance learning outcomes. This GitHub repository, EPFL_IKEA, is the culmination of efforts by us to create an AI model that predicts the difficulty levels of French texts. Our journey, rooted in our own experiences as native French speakers and learners of English, has led us from competing in Kaggle to developing a robust tool that aids learners by matching them with appropriately challenging texts.
 
 ## Project Background
 
