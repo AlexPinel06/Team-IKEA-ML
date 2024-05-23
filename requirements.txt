@@ -1,4 +1,6 @@
 streamlit
-scikit-learn
 joblib
-
+matplotlib
+numpy
+pandas
+scikit-learn
