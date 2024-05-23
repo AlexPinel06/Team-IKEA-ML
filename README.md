@@ -378,6 +378,13 @@ print("Accuracy:", results['eval_accuracy'])
 
 EPFL_IKEA represents a significant step forward in applying AI to language learning. Our model not only facilitates better learning experiences by ensuring content appropriateness but also demonstrates the potential of AI in educational settings. We continue to refine our approach, aiming to broaden its application and assist an even larger audience of French language learners.
 
+### Ranking
+
+As a side note, we successfully placed in the top 10, finishing in 8th position!
+
+<img width="1360" alt="Screenshot 2024-05-23 at 23 27 03" src="https://github.com/AlexPinel06/Team-IKEA-ML/assets/145569112/0a8add7a-f739-41af-b1ba-ac46f35c160e">
+
+
 ### Further Consideration 
 
 To further enhance the effectiveness and accuracy of our model, we are considering several key improvements:
