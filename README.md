@@ -1,4 +1,6 @@
 # EPFL_IKEA: AI-Powered French Text Difficulty Prediction
+## Link for the app: https://team-ikea-ml-73y8jzua6jrjzfpyemvpjr.streamlit.app
+## Link for the video : 
 
 ## Introduction 
 
