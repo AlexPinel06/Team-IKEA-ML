@@ -5,7 +5,7 @@ import numpy as np
 import random
 
 # Load the model, vectorizer, and label encoder
-model = joblib.load('model/logistic_regression_model.pkl')
+model = joblib.load('model/model.pkl')
 vectorizer = joblib.load('model/tfidf_vectorizer.pkl')
 label_encoder = joblib.load('model/label_encoder.pkl')
 
