@@ -386,3 +386,6 @@ To further enhance the effectiveness and accuracy of our model, we are consideri
 
 By focusing on these areas, we aim to make our tool even more effective and versatile, supporting a wider range of learners in achieving their language proficiency goals.
 
+When analyzing the confusion matrix, we can observe strong diagonal values, indicating good performance in correctly predicting each category. However, it is important to bear in mind the potential bias introduced by our data augmentation methods, as previously discussed.
+
+<img width="500" alt="Capture d’écran 2024-05-23 à 23 01 39" src="https://github.com/igordall/EPFL_IKEA/assets/153678341/e01192a4-1c9e-4f26-919a-74210e3e2a5c">
