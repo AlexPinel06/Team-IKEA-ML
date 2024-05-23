@@ -370,6 +370,11 @@ trainer.train()
 results = trainer.evaluate()
 print("Accuracy:", results['eval_accuracy'])
 ```
+When analyzing the confusion matrix, we can observe strong diagonal values, indicating good performance in correctly predicting each category. However, it is important to bear in mind the potential bias introduced by our data augmentation methods, as previously discussed.
+
+<img width="500" alt="Capture d’écran 2024-05-23 à 23 01 39" src="https://github.com/igordall/EPFL_IKEA/assets/153678341/e01192a4-1c9e-4f26-919a-74210e3e2a5c">
+
+
 ## Conclusion
 
 EPFL_IKEA represents a significant step forward in applying AI to language learning. Our model not only facilitates better learning experiences by ensuring content appropriateness but also demonstrates the potential of AI in educational settings. We continue to refine our approach, aiming to broaden its application and assist an even larger audience of French language learners.
@@ -385,7 +390,3 @@ To further enhance the effectiveness and accuracy of our model, we are consideri
 - User Feedback Integration: Incorporating user feedback into the training process can dynamically adapt the model to real-world effectiveness and user satisfaction, thereby continuously improving the prediction accuracy.
 
 By focusing on these areas, we aim to make our tool even more effective and versatile, supporting a wider range of learners in achieving their language proficiency goals.
-
-When analyzing the confusion matrix, we can observe strong diagonal values, indicating good performance in correctly predicting each category. However, it is important to bear in mind the potential bias introduced by our data augmentation methods, as previously discussed.
-
-<img width="500" alt="Capture d’écran 2024-05-23 à 23 01 39" src="https://github.com/igordall/EPFL_IKEA/assets/153678341/e01192a4-1c9e-4f26-919a-74210e3e2a5c">
