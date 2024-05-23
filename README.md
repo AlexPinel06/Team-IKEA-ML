@@ -233,6 +233,9 @@ Before entering the competition, we re-trained our model on the entire dataset, 
 
 In summary, through careful data augmentation, meticulous hyperparameter tuning, and comprehensive training on the entire dataset, we significantly enhanced our model's performance, demonstrating robustness and adaptability in both controlled tests and competitive environments. These efforts improved the model's accuracy on an 80/20 data split to 82%, compared with a competition accuracy of 61%. This disparity suggests that while our data augmentation effectively increased the model's performance in a controlled setting, it may not have fully captured the broader nuances of the language required for the varied challenges presented in the competition.
 
+When analyzing the confusion matrix, we can observe strong diagonal values, indicating good performance in correctly predicting each category. However, it is important to bear in mind the potential bias introduced by our data augmentation methods, as previously discussed.
+
+<img width="500" alt="Capture d’écran 2024-05-23 à 23 01 39" src="https://github.com/igordall/EPFL_IKEA/assets/153678341/e01192a4-1c9e-4f26-919a-74210e3e2a5c">
 
 Find below the code for Data Augmentation and Preparation: 
 ```python
@@ -370,10 +373,6 @@ trainer.train()
 results = trainer.evaluate()
 print("Accuracy:", results['eval_accuracy'])
 ```
-When analyzing the confusion matrix, we can observe strong diagonal values, indicating good performance in correctly predicting each category. However, it is important to bear in mind the potential bias introduced by our data augmentation methods, as previously discussed.
-
-<img width="500" alt="Capture d’écran 2024-05-23 à 23 01 39" src="https://github.com/igordall/EPFL_IKEA/assets/153678341/e01192a4-1c9e-4f26-919a-74210e3e2a5c">
-
 
 ## Conclusion
 
